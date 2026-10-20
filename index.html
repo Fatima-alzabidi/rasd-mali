@@ -1,0 +1,2522 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>رصد مالي | RASD FINANCIAL</title>
+
+<style>
+:root {
+  --bg: #07111f;
+  --panel: #101e31;
+  --panel2: #14243a;
+  --border: #243851;
+  --text: #edf4ff;
+  --muted: #8fa4bf;
+  --blue: #4387ff;
+  --cyan: #35d5df;
+  --green: #32d296;
+  --red: #ff647c;
+  --yellow: #f5c96b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: #091525;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 4%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  display: block;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 22px;
+  font-weight: 800;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 19px;
+  letter-spacing: 1px;
+}
+
+.brand p {
+  margin: 5px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 2px;
+  direction: ltr;
+  text-align: right;
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.language-control { position: relative; }
+.language-globe {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: #14243a;
+  color: var(--text);
+  font-size: 22px;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+.language-globe:hover {
+  transform: rotate(18deg);
+  border-color: var(--cyan);
+  box-shadow: 0 0 18px #35d5df35;
+}
+.language-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  inset-inline-end: 0;
+  min-width: 145px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #101e31;
+  box-shadow: 0 14px 35px #0007;
+  z-index: 100;
+}
+.language-menu[hidden] { display: none; }
+.language-menu button {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--text);
+  background: transparent;
+  text-align: start;
+}
+.language-menu button:hover { background: #172b45; color: var(--cyan); }
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 12px var(--green);
+}
+
+.nav-bar {
+  display: flex;
+  gap: 8px;
+  padding: 0 4% 14px;
+  overflow-x: auto;
+}
+
+.nav-btn {
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  padding: 11px 16px;
+  color: var(--muted);
+  background: transparent;
+  transition: .2s;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+  color: white;
+  background: #172b45;
+  border-color: #294666;
+}
+
+.nav-btn.active {
+  box-shadow: inset 0 -2px var(--cyan);
+}
+
+.container {
+  max-width: 1450px;
+  margin: auto;
+  padding: 30px 4%;
+}
+
+.page {
+  display: none;
+  animation: appear .35s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.page-heading h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.page-heading p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px;
+  min-width: 0;
+}
+
+.panel h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metric {
+  position: relative;
+  overflow: hidden;
+}
+
+.metric::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #4387ff12;
+  left: -20px;
+  bottom: -25px;
+}
+
+.metric-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.metric-value {
+  font-size: 27px;
+  font-weight: bold;
+  margin: 14px 0;
+  direction: ltr;
+  text-align: right;
+}
+
+.metric-foot {
+  font-size: 12px;
+  color: var(--green);
+}
+
+.blue { color: var(--blue); }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.cyan { color: var(--cyan); }
+.yellow { color: var(--yellow); }
+.muted { color: var(--muted); }
+
+.section-space {
+  margin-top: 22px;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel2);
+  color: var(--text);
+  padding: 11px 16px;
+  transition: .2s;
+}
+
+.btn:hover {
+  filter: brightness(1.2);
+}
+
+.btn-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: white;
+}
+
+.btn-danger {
+  background: #4a1c2a;
+  border-color: #773045;
+  color: #ff9cab;
+}
+
+.btn-success {
+  background: #123b35;
+  border-color: #1e6654;
+  color: #7de8bd;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+th, td {
+  padding: 15px 12px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+th {
+  color: var(--muted);
+  font-weight: normal;
+  background: #0d1929;
+}
+
+tbody tr:hover {
+  background: #ffffff05;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-size: 11px;
+}
+
+.badge-green {
+  background: #123b35;
+  color: #73e7b9;
+}
+
+.badge-red {
+  background: #451e2b;
+  color: #ff9bac;
+}
+
+.badge-yellow {
+  background: #45381c;
+  color: #f5d68b;
+}
+
+.badge-blue {
+  background: #172f50;
+  color: #91bcff;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  background: #091525;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: white;
+  padding: 12px;
+  outline: none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--blue);
+}
+
+.field textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chart text {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.chart-grid {
+  stroke: #263951;
+  stroke-dasharray: 4 5;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.chart-area {
+  fill: url(#areaGradient);
+}
+
+.chart-point {
+  fill: var(--cyan);
+  stroke: #102236;
+  stroke-width: 3;
+}
+
+.bar {
+  fill: var(--blue);
+  rx: 5;
+}
+
+.progress {
+  height: 7px;
+  border-radius: 20px;
+  background: #24364d;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  border-radius: inherit;
+}
+
+.rule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rule-row:last-child {
+  border-bottom: 0;
+}
+
+.rule-row strong {
+  font-size: 13px;
+}
+
+.rule-row p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.switch {
+  width: 44px;
+  height: 24px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.switch input {
+  display: none;
+}
+
+.switch span {
+  position: absolute;
+  inset: 0;
+  background: #34445a;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.switch span::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  right: 3px;
+  top: 3px;
+  border-radius: 50%;
+  background: white;
+  transition: .2s;
+}
+
+.switch input:checked + span {
+  background: var(--blue);
+}
+
+.switch input:checked + span::before {
+  transform: translateX(-20px);
+}
+
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.notice:last-child {
+  border-bottom: 0;
+}
+
+.notice-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #172f50;
+  flex-shrink: 0;
+}
+
+.notice h4 {
+  margin: 0 0 7px;
+  font-size: 13px;
+}
+
+.notice p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.notice time {
+  display: block;
+  color: #6e849f;
+  font-size: 10px;
+  margin-top: 7px;
+}
+
+.site-card {
+  background: #0c1929;
+  border: 1px solid var(--border);
+  padding: 17px;
+  border-radius: 12px;
+}
+
+.site-card h4 {
+  margin: 0 0 10px;
+}
+
+.site-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.site-coords {
+  direction: ltr;
+  text-align: right;
+  font-size: 12px;
+  color: var(--cyan);
+}
+
+.empty {
+  padding: 25px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.footer {
+  text-align: center;
+  color: #647993;
+  padding: 30px 10px;
+  font-size: 11px;
+  border-top: 1px solid var(--border);
+  margin-top: 35px;
+}
+
+#transitionOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: #06101ef5;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0;
+}
+
+#transitionOverlay.show {
+  display: flex;
+}
+
+.transition-logo {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  background: transparent;
+  color: var(--text);
+  font-size: clamp(25px, 4vw, 38px);
+  font-weight: 800;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  animation: logoReveal .85s ease both;
+}
+.transition-logo::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  right: -70%;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, #35d5dfb8, #ffffff, #4387ffb8, transparent);
+  filter: blur(5px);
+  transform: skewX(-18deg);
+  animation: logoShine .9s ease-in-out both;
+  pointer-events: none;
+}
+@keyframes logoShine {
+  from { right: -70%; opacity: 0; }
+  15% { opacity: 1; }
+  to { right: 130%; opacity: 0; }
+}
+@keyframes logoReveal {
+  from { opacity: 0; transform: translateX(35px); filter: brightness(.5); }
+  to { opacity: 1; transform: translateX(0); filter: brightness(1); }
+}
+
+.transition-title {
+  font-size: 19px;
+  letter-spacing: 2px;
+  direction: ltr;
+}
+
+.transition-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #253951;
+  border-top-color: var(--cyan);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.toast-container {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  max-width: 350px;
+  background: #14243a;
+  border: 1px solid #34516f;
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: 0 10px 30px #0005;
+  font-size: 13px;
+  animation: appear .2s ease;
+}
+
+@media (max-width: 1000px) {
+  .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 650px) {
+  .header-main { padding: 14px 4%; }
+  .brand h1 { font-size: 16px; }
+  .header-status { display: none; }
+  .header-tools { gap: 0; }
+  .language-globe { width: 38px; height: 38px; }
+  .container { padding: 22px 4%; }
+  .grid-4, .grid-3, .grid-2, .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .page-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .metric-value { font-size: 24px; }
+  .panel { padding: 16px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="app-header">
+  <div class="header-main">
+    <div class="brand">
+      <div class="logo" data-i18n="رصد مالي">رصد مالي</div>
+      <div>
+        <h1>رصد مالي</h1>
+        <p>RASD FINANCIAL</p>
+      </div>
+    </div>
+
+    <div class="header-tools">
+      <div class="header-status">
+        <span class="status-dot"></span>
+        <span data-i18n="واجهة تجريبية نشطة">واجهة تجريبية نشطة</span>
+      </div>
+      <div class="language-control">
+        <button class="language-globe" id="languageToggle" type="button"
+          aria-label="تغيير اللغة" aria-expanded="false" title="تغيير اللغة">🌐</button>
+        <div class="language-menu" id="languageMenu" hidden>
+          <button type="button" data-language="ar">العربية</button>
+          <button type="button" data-language="en">English</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="nav-bar">
+    <button class="nav-btn active" data-page="dashboard">الرئيسية</button>
+    <button class="nav-btn" data-page="notifications">التنبيهات</button>
+    <button class="nav-btn" data-page="transactions">المعاملات</button>
+    <button class="nav-btn" data-page="rules">قواعد الحماية</button>
+    <button class="nav-btn" data-page="expansion">توسع الشركة</button>
+    <button class="nav-btn" data-page="audit">سجل المراجعة</button>
+  </nav>
+</header>
+
+<div id="transitionOverlay" aria-hidden="true">
+  <div class="transition-logo" id="transitionLogo" data-i18n="رصد مالي">رصد مالي</div>
+</div>
+
+<main class="container">
+
+  <!-- الصفحة الرئيسية -->
+  <section class="page active" id="dashboard">
+    <div class="page-heading">
+      <div>
+        <h2>لوحة التحكم</h2>
+        <p>نظرة عامة على المؤشرات المالية وحركة النظام.</p>
+      </div>
+      <button class="btn" onclick="refreshDashboard()">↻ تحديث البيانات</button>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="panel metric">
+        <div class="metric-label">إجمالي الأصول</div>
+        <div class="metric-value" id="totalAssets">2,450,000</div>
+        <div class="metric-foot">↑ 8.4% مقارنة بالفترة السابقة</div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metric-label">الإيرادات</div>
+        <div class="metric-value green" id="totalRevenue">684,500</div>
+        <div class="metric-foot">↑ 12.6% نمو الإيرادات</div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metric-label">المصروفات</div>
+        <div class="metric-value red" id="totalExpenses">218,300</div>
+        <div class="metric-foot" style="color:var(--muted)">إجمالي المصروفات المسجلة</div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metric-label">صافي الربح</div>
+        <div class="metric-value cyan" id="netProfit">466,200</div>
+        <div class="metric-foot">هامش ربح تشغيلي تجريبي</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2 section-space">
+      <div class="panel">
+        <h3>الأداء المالي</h3>
+        <p class="muted" style="font-size:12px">بيانات توضيحية خلال آخر ستة أشهر</p>
+
+        <svg class="chart" viewBox="0 0 600 270" role="img" aria-label="مخطط الأداء المالي">
+          <defs>
+            <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#35d5df" stop-opacity=".28"/>
+              <stop offset="100%" stop-color="#35d5df" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+
+          <line class="chart-grid" x1="50" y1="35" x2="570" y2="35"/>
+          <line class="chart-grid" x1="50" y1="85" x2="570" y2="85"/>
+          <line class="chart-grid" x1="50" y1="135" x2="570" y2="135"/>
+          <line class="chart-grid" x1="50" y1="185" x2="570" y2="185"/>
+          <line class="chart-grid" x1="50" y1="235" x2="570" y2="235"/>
+
+          <path class="chart-area" d="M60 190 L155 155 L250 170 L345 110 L440 125 L535 55 L535 235 L60 235 Z"/>
+          <path class="chart-line" d="M60 190 L155 155 L250 170 L345 110 L440 125 L535 55"/>
+
+          <circle class="chart-point" cx="60" cy="190" r="5"/>
+          <circle class="chart-point" cx="155" cy="155" r="5"/>
+          <circle class="chart-point" cx="250" cy="170" r="5"/>
+          <circle class="chart-point" cx="345" cy="110" r="5"/>
+          <circle class="chart-point" cx="440" cy="125" r="5"/>
+          <circle class="chart-point" cx="535" cy="55" r="5"/>
+
+          <text x="60" y="258" text-anchor="middle">مايو</text>
+          <text x="155" y="258" text-anchor="middle">يونيو</text>
+          <text x="250" y="258" text-anchor="middle">يوليو</text>
+          <text x="345" y="258" text-anchor="middle">أغسطس</text>
+          <text x="440" y="258" text-anchor="middle">سبتمبر</text>
+          <text x="535" y="258" text-anchor="middle">أكتوبر</text>
+        </svg>
+      </div>
+
+      <div class="panel">
+        <h3>ملخص النظام</h3>
+
+        <div class="rule-row">
+          <div>
+            <strong>حالة قواعد الحماية</strong>
+            <p>مراقبة العمليات والقيم المالية</p>
+          </div>
+          <span class="badge badge-green">مفعّلة</span>
+        </div>
+
+        <div class="rule-row">
+          <div>
+            <strong>المعاملات المسجلة</strong>
+            <p>عدد العمليات في سجل العرض</p>
+          </div>
+          <strong id="transactionCount">3</strong>
+        </div>
+
+        <div class="rule-row">
+          <div>
+            <strong>التنبيهات</strong>
+            <p>التنبيهات المسجلة في الواجهة</p>
+          </div>
+          <strong id="notificationCount">2</strong>
+        </div>
+
+        <div class="rule-row">
+          <div>
+            <strong>مواقع الشركة</strong>
+            <p>المواقع المسجلة في قسم التوسع</p>
+          </div>
+          <strong id="siteCount">2</strong>
+        </div>
+
+        <div class="section-space">
+          <button class="btn btn-primary" onclick="navigateTo('transactions')">عرض المعاملات</button>
+          <button class="btn" onclick="navigateTo('expansion')">عرض توسع الشركة</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel section-space">
+      <h3>آخر المعاملات</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>رقم العملية</th>
+              <th>الوصف</th>
+              <th>التصنيف</th>
+              <th>المبلغ</th>
+              <th>الحالة</th>
+            </tr>
+          </thead>
+          <tbody id="recentTransactions"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- التنبيهات -->
+  <section class="page" id="notifications">
+    <div class="page-heading">
+      <div>
+        <h2>مركز التنبيهات</h2>
+        <p>متابعة التنبيهات والأحداث المسجلة في النموذج.</p>
+      </div>
+      <button class="btn" onclick="clearNotifications()">مسح التنبيهات</button>
+    </div>
+
+    <div class="panel">
+      <div id="notificationList"></div>
+    </div>
+
+    <div class="panel section-space">
+      <h3>إضافة تنبيه تجريبي</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label for="noticeTitle">عنوان التنبيه</label>
+          <input id="noticeTitle" placeholder="مثال: مراجعة مصروفات">
+        </div>
+        <div class="field">
+          <label for="noticeLevel">مستوى التنبيه</label>
+          <select id="noticeLevel">
+            <option value="info">معلومات</option>
+            <option value="warning">تحذير</option>
+            <option value="critical">حرج</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label for="noticeText">التفاصيل</label>
+          <textarea id="noticeText" placeholder="اكتب تفاصيل التنبيه..."></textarea>
+        </div>
+      </div>
+      <div class="section-space">
+        <button class="btn btn-primary" onclick="addNotification()">إضافة التنبيه</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- المعاملات -->
+  <section class="page" id="transactions">
+    <div class="page-heading">
+      <div>
+        <h2>إدارة المعاملات</h2>
+        <p>عرض وإضافة العمليات المالية التجريبية.</p>
+      </div>
+      <button class="btn" onclick="exportTransactions()">تصدير CSV</button>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="panel metric">
+        <div class="metric-label">عدد المعاملات</div>
+        <div class="metric-value" id="allTransactionsCount">3</div>
+      </div>
+      <div class="panel metric">
+        <div class="metric-label">إجمالي الإيرادات المسجلة</div>
+        <div class="metric-value green" id="transactionsIncome">0</div>
+      </div>
+      <div class="panel metric">
+        <div class="metric-label">إجمالي المصروفات المسجلة</div>
+        <div class="metric-value red" id="transactionsExpense">0</div>
+      </div>
+    </div>
+
+    <div class="panel section-space">
+      <h3>إضافة معاملة</h3>
+      <div class="form-grid">
+        <div class="field">
+          <label for="transactionDescription">وصف العملية</label>
+          <input id="transactionDescription" placeholder="مثال: إيرادات المبيعات">
+        </div>
+        <div class="field">
+          <label for="transactionType">نوع العملية</label>
+          <select id="transactionType">
+            <option value="income">إيراد</option>
+            <option value="expense">مصروف</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="transactionAmount">المبلغ</label>
+          <input id="transactionAmount" type="number" min="0.01" step="0.01" placeholder="0.00">
+        </div>
+        <div class="field">
+          <label for="transactionCategory">التصنيف</label>
+          <input id="transactionCategory" placeholder="مثال: تشغيل">
+        </div>
+      </div>
+      <div class="section-space">
+        <button class="btn btn-primary" onclick="addTransaction()">حفظ المعاملة</button>
+      </div>
+    </div>
+
+    <div class="panel section-space">
+      <h3>سجل المعاملات</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>رقم العملية</th>
+              <th>الوصف</th>
+              <th>التصنيف</th>
+              <th>النوع</th>
+              <th>المبلغ</th>
+              <th>التاريخ</th>
+              <th>الحالة</th>
+              <th>إجراء</th>
+            </tr>
+          </thead>
+          <tbody id="transactionsTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- قواعد الحماية -->
+  <section class="page" id="rules">
+    <div class="page-heading">
+      <div>
+        <h2>قواعد الحماية</h2>
+        <p>إعداد قواعد تحقق تجريبية داخل واجهة المنصة.</p>
+      </div>
+      <span class="badge badge-blue">إعدادات النموذج</span>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="panel">
+        <h3>قواعد المراقبة</h3>
+
+        <div class="rule-row">
+          <div>
+            <strong>مراقبة العمليات الكبيرة</strong>
+            <p>إظهار تنبيه للمعاملات التي تتجاوز الحد المحدد.</p>
+          </div>
+          <label class="switch">
+            <input id="ruleLarge" type="checkbox" checked onchange="toggleRule('large',this.checked)">
+            <span></span>
+          </label>
+        </div>
+
+        <div class="rule-row">
+          <div>
+            <strong>التحقق من المبالغ</strong>
+            <p>رفض المبالغ الصفرية أو السالبة.</p>
+          </div>
+          <label class="switch">
+            <input id="ruleAmount" type="checkbox" checked onchange="toggleRule('amount',this.checked)">
+            <span></span>
+          </label>
+        </div>
+
+        <div class="rule-row">
+          <div>
+            <strong>تسجيل الأحداث</strong>
+            <p>إضافة أحداث الإجراءات إلى سجل المراجعة.</p>
+          </div>
+          <label class="switch">
+            <input id="ruleAudit" type="checkbox" checked onchange="toggleRule('audit',this.checked)">
+            <span></span>
+          </label>
+        </div>
+
+        <div class="rule-row">
+          <div>
+            <strong>تنبيهات التوسع</strong>
+            <p>إظهار تنبيه عند إضافة أو حذف موقع.</p>
+          </div>
+          <label class="switch">
+            <input id="ruleExpansion" type="checkbox" checked onchange="toggleRule('expansion',this.checked)">
+            <span></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>حدود المراقبة</h3>
+
+        <div class="field">
+          <label for="largeLimit">الحد الأعلى للعملية قبل التنبيه</label>
+          <input id="largeLimit" type="number" min="1" value="50000">
+        </div>
+
+        <div class="field section-space">
+          <label for="currency">العملة المعروضة</label>
+          <select id="currency">
+            <option value="SAR">ريال سعودي (SAR)</option>
+            <option value="USD">دولار أمريكي (USD)</option>
+            <option value="AED">درهم إماراتي (AED)</option>
+          </select>
+        </div>
+
+        <div class="section-space">
+          <button class="btn btn-primary" onclick="saveRules()">حفظ القواعد</button>
+          <button class="btn" onclick="resetRules()">إعادة الافتراضي</button>
+        </div>
+
+        <p class="muted" style="font-size:11px;line-height:1.8;margin-top:20px">
+          هذه القواعد تعمل داخل واجهة العرض فقط، ولا تستبدل نظام صلاحيات أو حماية خلفي.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- توسع الشركة -->
+  <section class="page" id="expansion">
+    <div class="page-heading">
+      <div>
+        <h2>توسع الشركة</h2>
+        <p>متابعة نمو الشركة ومواقعها باستخدام الإحداثيات الجغرافية والمؤشرات التوضيحية.</p>
+      </div>
+      <button class="btn btn-primary" onclick="document.getElementById('siteName').focus()">+ إضافة موقع</button>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="panel metric">
+        <div class="metric-label">عدد المواقع</div>
+        <div class="metric-value cyan" id="expansionSiteCount">2</div>
+        <div class="metric-foot">المواقع المسجلة في النموذج</div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metric-label">مؤشر النمو</div>
+        <div class="metric-value green" id="growthRate">+18%</div>
+        <div class="metric-foot">قيمة تجريبية قابلة للتعديل</div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metric-label">المواقع الجديدة</div>
+        <div class="metric-value" id="newSitesCount">1</div>
+        <div class="metric-foot">مواقع موسومة بأنها جديدة</div>
+      </div>
+
+      <div class="panel metric">
+        <div class="metric-label">حالة التوسع</div>
+        <div class="metric-value cyan" id="expansionStatus" style="font-size:20px">نمو</div>
+        <div class="metric-foot">وفق المؤشر التوضيحي الحالي</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2 section-space">
+      <div class="panel">
+        <h3>مخطط نمو الشركة</h3>
+        <p class="muted" style="font-size:12px">مؤشر شهري توضيحي، وليس بيانات مالية فعلية.</p>
+
+        <svg class="chart" viewBox="0 0 600 270" role="img" aria-label="مخطط نمو الشركة">
+          <line class="chart-grid" x1="45" y1="35" x2="575" y2="35"/>
+          <line class="chart-grid" x1="45" y1="85" x2="575" y2="85"/>
+          <line class="chart-grid" x1="45" y1="135" x2="575" y2="135"/>
+          <line class="chart-grid" x1="45" y1="185" x2="575" y2="185"/>
+          <line class="chart-grid" x1="45" y1="235" x2="575" y2="235"/>
+
+          <rect class="bar" x="75" y="160" width="42" height="75"/>
+          <rect class="bar" x="155" y="140" width="42" height="95"/>
+          <rect class="bar" x="235" y="125" width="42" height="110"/>
+          <rect class="bar" x="315" y="95" width="42" height="140"/>
+          <rect class="bar" x="395" y="75" width="42" height="160"/>
+          <rect class="bar" x="475" y="45" width="42" height="190"/>
+
+          <text x="96" y="258" text-anchor="middle">مايو</text>
+          <text x="176" y="258" text-anchor="middle">يونيو</text>
+          <text x="256" y="258" text-anchor="middle">يوليو</text>
+          <text x="336" y="258" text-anchor="middle">أغسطس</text>
+          <text x="416" y="258" text-anchor="middle">سبتمبر</text>
+          <text x="496" y="258" text-anchor="middle">أكتوبر</text>
+        </svg>
+      </div>
+
+      <div class="panel">
+        <h3>مؤشر النمو والانكماش</h3>
+        <p class="muted" style="font-size:12px">غيّر قيمة المؤشر لتوضيح حالة الشركة.</p>
+
+        <div class="field">
+          <label for="growthInput">نسبة النمو أو الانكماش (%)</label>
+          <input id="growthInput" type="number" min="-100" max="500" value="18">
+        </div>
+
+        <div class="section-space">
+          <button class="btn btn-primary" onclick="updateGrowth()">تحديث المؤشر</button>
+        </div>
+
+        <div class="section-space">
+          <div class="rule-row">
+            <span>مؤشر الشركة</span>
+            <strong id="growthStatusText" class="green">نمو إيجابي</strong>
+          </div>
+          <div class="progress">
+            <span id="growthProgress" style="width:60%"></span>
+          </div>
+          <p class="muted" id="growthExplanation" style="font-size:12px;line-height:1.9">
+            تشير القيمة الحالية إلى نمو وفق المؤشر التجريبي.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2 section-space">
+      <div class="panel">
+        <h3>إضافة موقع جغرافي</h3>
+        <p class="muted" style="font-size:12px;line-height:1.8">
+          أدخل اسم الفرع وخط العرض وخط الطول لتسجيله في القائمة.
+        </p>
+
+        <div class="form-grid">
+          <div class="field full">
+            <label for="siteName">اسم الفرع أو الموقع</label>
+            <input id="siteName" placeholder="مثال: فرع الرياض">
+          </div>
+
+          <div class="field">
+            <label for="siteLatitude">خط العرض Latitude</label>
+            <input id="siteLatitude" type="number" min="-90" max="90" step="any" placeholder="24.7136">
+          </div>
+
+          <div class="field">
+            <label for="siteLongitude">خط الطول Longitude</label>
+            <input id="siteLongitude" type="number" min="-180" max="180" step="any" placeholder="46.6753">
+          </div>
+
+          <div class="field">
+            <label for="siteStatus">حالة الموقع</label>
+            <select id="siteStatus">
+              <option value="active">نشط</option>
+              <option value="new">جديد</option>
+              <option value="planned">مخطط له</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="siteInvestment">الاستثمار التقديري</label>
+            <input id="siteInvestment" type="number" min="0" step="any" placeholder="100000">
+          </div>
+        </div>
+
+        <div class="section-space">
+          <button class="btn btn-primary" onclick="addSite()">تسجيل الموقع</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>قائمة المواقع</h3>
+        <p class="muted" style="font-size:12px">الإحداثيات المعروضة هي ما تم إدخاله أو قيم تجريبية.</p>
+        <div id="sitesList" class="grid" style="gap:12px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- سجل المراجعة -->
+  <section class="page" id="audit">
+    <div class="page-heading">
+      <div>
+        <h2>سجل المراجعة</h2>
+        <p>سجل إجراءات الواجهة التجريبية.</p>
+      </div>
+      <button class="btn" onclick="exportAudit()">تصدير السجل</button>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="panel metric">
+        <div class="metric-label">عدد الأحداث</div>
+        <div class="metric-value" id="auditCount">0</div>
+      </div>
+      <div class="panel metric">
+        <div class="metric-label">آخر إجراء</div>
+        <div class="metric-value cyan" style="font-size:19px" id="lastAuditAction">—</div>
+      </div>
+      <div class="panel metric">
+        <div class="metric-label">نوع السجل</div>
+        <div class="metric-value" style="font-size:19px">محلي</div>
+      </div>
+    </div>
+
+    <div class="panel section-space">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>الوقت</th>
+              <th>الإجراء</th>
+              <th>التفاصيل</th>
+            </tr>
+          </thead>
+          <tbody id="auditTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="muted" style="font-size:12px;line-height:1.8">
+      تنبيه: سجل المراجعة هنا توضيحي، ويمكن للمستخدم تعديل بيانات المتصفح. لا يُعد سجل تدقيق آمنًا أو غير قابل للتلاعب.
+    </p>
+  </section>
+
+  <footer class="footer">
+    RASD FINANCIAL · رصد مالي
+    <br><br>
+    نموذج واجهة تجريبي — البيانات ليست مرتبطة بمصدر مالي حقيقي.
+  </footer>
+</main>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+"use strict";
+
+/* البيانات التجريبية */
+let transactions = [
+  {
+    id: 1001,
+    description: "إيرادات المبيعات",
+    category: "مبيعات",
+    type: "income",
+    amount: 125000,
+    date: new Date().toISOString(),
+    status: "مكتملة"
+  },
+  {
+    id: 1002,
+    description: "مصاريف التشغيل",
+    category: "تشغيل",
+    type: "expense",
+    amount: 28400,
+    date: new Date().toISOString(),
+    status: "مكتملة"
+  },
+  {
+    id: 1003,
+    description: "عقد خدمات",
+    category: "خدمات",
+    type: "income",
+    amount: 78500,
+    date: new Date().toISOString(),
+    status: "قيد المراجعة"
+  }
+];
+
+let notifications = [
+  {
+    id: 1,
+    title: "تم تشغيل واجهة رصد مالي",
+    text: "تم تحميل النموذج التجريبي بنجاح. لا توجد صلة بنظام مالي خارجي.",
+    level: "info",
+    date: new Date().toISOString()
+  },
+  {
+    id: 2,
+    title: "مراجعة البيانات المالية",
+    text: "تأكد من مراجعة القيم التجريبية قبل استخدامها في أي عرض أو تقرير.",
+    level: "warning",
+    date: new Date().toISOString()
+  }
+];
+
+let audit = [];
+let nextTransactionId = 1004;
+let nextNotificationId = 3;
+let nextSiteId = 3;
+
+let sites = [
+  {
+    id: 1,
+    name: "المقر الرئيسي",
+    latitude: 24.7136,
+    longitude: 46.6753,
+    status: "active",
+    investment: 500000
+  },
+  {
+    id: 2,
+    name: "فرع جدة",
+    latitude: 21.4858,
+    longitude: 39.1925,
+    status: "new",
+    investment: 250000
+  }
+];
+
+let rules = {
+  large: true,
+  amount: true,
+  audit: true,
+  expansion: true
+};
+
+let currency = "SAR";
+let largeLimit = 50000;
+let growthRate = 18;
+
+/* الأدوات العامة */
+function money(value) {
+  const symbols = {
+    SAR: "ر.س",
+    USD: "$",
+    AED: "د.إ"
+  };
+
+  return Number(value).toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  }) + " " + (symbols[currency] || "ر.س");
+}
+
+function safeText(value) {
+  return String(value).replace(/[&<>"']/g, function(char) {
+    const map = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    };
+    return map[char];
+  });
+}
+
+function dateText(value) {
+  return new Date(value).toLocaleString(document.documentElement.lang === "en" ? "en-US" : "ar-SA", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function showToast(message) {
+  const container = document.getElementById("toastContainer");
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.textContent = message;
+  container.appendChild(toast);
+
+  setTimeout(function() {
+    toast.remove();
+  }, 3500);
+}
+
+function logAudit(action, details) {
+  if (!rules.audit) return;
+
+  audit.unshift({
+    date: new Date().toISOString(),
+    action: action,
+    details: details
+  });
+
+  renderAudit();
+}
+
+function addSystemNotification(title, text, level = "info") {
+  notifications.unshift({
+    id: nextNotificationId++,
+    title: title,
+    text: text,
+    level: level,
+    date: new Date().toISOString()
+  });
+
+  renderNotifications();
+  updateDashboardCounts();
+}
+
+/* التنقل وشاشة التحميل */
+let navigationTimer = null;
+
+function navigateTo(pageId) {
+  const target = document.getElementById(pageId);
+  if (!target) return;
+
+  const current = document.querySelector(".page.active");
+  if (current && current.id === pageId) return;
+
+  const transitionLogo = document.getElementById("transitionLogo");
+  if (transitionLogo) {
+    transitionLogo.textContent = currentLanguage === "en" ? "RASD MALI" : "رصد مالي";
+    transitionLogo.style.direction = currentLanguage === "en" ? "ltr" : "rtl";
+    transitionLogo.style.letterSpacing = currentLanguage === "en" ? "3px" : "1px";
+  }
+  document.getElementById("transitionOverlay").classList.add("show");
+
+  document.querySelectorAll(".nav-btn").forEach(function(button) {
+    button.classList.toggle("active", button.dataset.page === pageId);
+  });
+
+  if (navigationTimer) clearTimeout(navigationTimer);
+
+  navigationTimer = setTimeout(function() {
+    document.querySelectorAll(".page").forEach(function(page) {
+      page.classList.toggle("active", page.id === pageId);
+    });
+
+    document.getElementById("transitionOverlay").classList.remove("show");
+
+    logAudit("التنقل", "فتح قسم " + pageId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, 650);
+}
+
+document.querySelectorAll(".nav-btn").forEach(function(button) {
+  button.addEventListener("click", function() {
+    navigateTo(button.dataset.page);
+  });
+});
+
+/* المعاملات */
+function transactionStatusBadge(status) {
+  if (status === "مكتملة") {
+    return '<span class="badge badge-green">' + translateText("مكتملة", currentLanguage) + '</span>';
+  }
+
+  return '<span class="badge badge-yellow">' +
+    safeText(status) + '</span>';
+}
+
+function transactionTypeBadge(type) {
+  return type === "income"
+    ? '<span class="badge badge-green">إيراد</span>'
+    : '<span class="badge badge-red">مصروف</span>';
+}
+
+function renderTransactions() {
+  const tbody = document.getElementById("transactionsTable");
+  const recent = document.getElementById("recentTransactions");
+
+  const rows = transactions.map(function(transaction) {
+    const amountClass = transaction.type === "income" ? "green" : "red";
+
+    return `
+      <tr>
+        <td>#${transaction.id}</td>
+        <td>${safeText(translateText(transaction.description, currentLanguage))}</td>
+        <td>${safeText(translateText(transaction.category, currentLanguage))}</td>
+        <td>${transactionTypeBadge(transaction.type)}</td>
+        <td class="${amountClass}" dir="ltr">${money(transaction.amount)}</td>
+        <td>${dateText(transaction.date)}</td>
+        <td>${transactionStatusBadge(translateText(transaction.status, currentLanguage))}</td>
+        <td>
+          <button class="btn btn-danger" onclick="deleteTransaction(${transaction.id})">
+            حذف
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  tbody.innerHTML = rows || '<tr><td colspan="8" class="empty">لا توجد معاملات مسجلة</td></tr>';
+
+  recent.innerHTML = transactions.slice(0, 5).map(function(transaction) {
+    return `
+      <tr>
+        <td>#${transaction.id}</td>
+        <td>${safeText(translateText(transaction.description, currentLanguage))}</td>
+        <td>${safeText(translateText(transaction.category, currentLanguage))}</td>
+        <td class="${transaction.type === "income" ? "green" : "red"}" dir="ltr">
+          ${money(transaction.amount)}
+        </td>
+        <td>${transactionStatusBadge(translateText(transaction.status, currentLanguage))}</td>
+      </tr>
+    `;
+  }).join("") || '<tr><td colspan="5" class="empty">لا توجد معاملات</td></tr>';
+
+  const income = transactions
+    .filter(item => item.type === "income")
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  const expense = transactions
+    .filter(item => item.type === "expense")
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  document.getElementById("allTransactionsCount").textContent = transactions.length;
+  document.getElementById("transactionsIncome").textContent = money(income);
+  document.getElementById("transactionsExpense").textContent = money(expense);
+
+  updateDashboardCounts();
+}
+
+function addTransaction() {
+  const description = document.getElementById("transactionDescription").value.trim();
+  const type = document.getElementById("transactionType").value;
+  const amount = Number(document.getElementById("transactionAmount").value);
+  const category = document.getElementById("transactionCategory").value.trim();
+
+  if (!description || !category) {
+    showToast("يرجى إدخال وصف العملية والتصنيف.");
+    return;
+  }
+
+  if (rules.amount && (!Number.isFinite(amount) || amount <= 0)) {
+    showToast("يجب أن يكون المبلغ أكبر من صفر.");
+    return;
+  }
+
+  if (!Number.isFinite(amount) || amount < 0) {
+    showToast("يرجى إدخال مبلغ صحيح.");
+    return;
+  }
+
+  const transaction = {
+    id: nextTransactionId++,
+    description: description,
+    category: category,
+    type: type,
+    amount: amount,
+    date: new Date().toISOString(),
+    status: "مكتملة"
+  };
+
+  transactions.unshift(transaction);
+
+  logAudit("إضافة معاملة", "رقم العملية " + transaction.id);
+
+  if (rules.large && amount >= largeLimit) {
+    addSystemNotification(
+      "معاملة كبيرة",
+      "تم تسجيل معاملة بقيمة " + money(amount) + ". يرجى مراجعتها.",
+      "warning"
+    );
+  }
+
+  renderTransactions();
+  updateDashboard();
+  showToast("تمت إضافة المعاملة.");
+
+  document.getElementById("transactionDescription").value = "";
+  document.getElementById("transactionAmount").value = "";
+  document.getElementById("transactionCategory").value = "";
+}
+
+function deleteTransaction(id) {
+  const transaction = transactions.find(item => item.id === id);
+  if (!transaction) return;
+
+  if (!confirm("هل تريد حذف هذه المعاملة من النموذج؟")) return;
+
+  transactions = transactions.filter(item => item.id !== id);
+  logAudit("حذف معاملة", "حذف العملية رقم " + id);
+
+  renderTransactions();
+  updateDashboard();
+  showToast("تم حذف المعاملة من النموذج.");
+}
+
+/* التنبيهات */
+function renderNotifications() {
+  const list = document.getElementById("notificationList");
+
+  const icons = {
+    info: "ℹ",
+    warning: "⚠",
+    critical: "!"
+  };
+
+  const badges = {
+    info: "badge-blue",
+    warning: "badge-yellow",
+    critical: "badge-red"
+  };
+
+  list.innerHTML = notifications.map(function(notice) {
+    return `
+      <div class="notice">
+        <div class="notice-icon">${icons[notice.level] || "ℹ"}</div>
+        <div style="flex:1">
+          <h4>
+            ${safeText(translateText(notice.title, currentLanguage))}
+            <span class="badge ${badges[notice.level] || "badge-blue"}">
+              ${safeText(translateText(({info:"معلومات",warning:"تحذير",critical:"حرج"})[notice.level] || notice.level, currentLanguage))}
+            </span>
+          </h4>
+          <p>${safeText(translateText(notice.text, currentLanguage))}</p>
+          <time>${dateText(notice.date)}</time>
+        </div>
+      </div>
+    `;
+  }).join("") || '<div class="empty">لا توجد تنبيهات حالياً.</div>';
+
+  updateDashboardCounts();
+}
+
+function addNotification() {
+  const title = document.getElementById("noticeTitle").value.trim();
+  const text = document.getElementById("noticeText").value.trim();
+  const level = document.getElementById("noticeLevel").value;
+
+  if (!title || !text) {
+    showToast("يرجى إدخال عنوان التنبيه وتفاصيله.");
+    return;
+  }
+
+  notifications.unshift({
+    id: nextNotificationId++,
+    title: title,
+    text: text,
+    level: level,
+    date: new Date().toISOString()
+  });
+
+  logAudit("إضافة تنبيه", title);
+  renderNotifications();
+  showToast("تمت إضافة التنبيه.");
+
+  document.getElementById("noticeTitle").value = "";
+  document.getElementById("noticeText").value = "";
+}
+
+function clearNotifications() {
+  if (!notifications.length) {
+    showToast("لا توجد تنبيهات لمسحها.");
+    return;
+  }
+
+  if (!confirm("هل تريد مسح التنبيهات من النموذج؟")) return;
+
+  notifications = [];
+  logAudit("مسح التنبيهات", "تم مسح قائمة التنبيهات");
+  renderNotifications();
+  showToast("تم مسح التنبيهات.");
+}
+
+/* قواعد الحماية */
+function toggleRule(name, enabled) {
+  rules[name] = enabled;
+  logAudit("تغيير قاعدة", name + ": " + (enabled ? "مفعّلة" : "متوقفة"));
+}
+
+function saveRules() {
+  const limit = Number(document.getElementById("largeLimit").value);
+  const selectedCurrency = document.getElementById("currency").value;
+
+  if (!Number.isFinite(limit) || limit <= 0) {
+    showToast("يرجى إدخال حد مالي صحيح.");
+    return;
+  }
+
+  largeLimit = limit;
+  currency = selectedCurrency;
+
+  renderTransactions();
+  updateDashboard();
+  logAudit("حفظ القواعد", "تحديث حدود المراقبة والعملة");
+  showToast("تم حفظ إعدادات النموذج.");
+}
+
+function resetRules() {
+  rules = {
+    large: true,
+    amount: true,
+    audit: true,
+    expansion: true
+  };
+
+  document.getElementById("ruleLarge").checked = true;
+  document.getElementById("ruleAmount").checked = true;
+  document.getElementById("ruleAudit").checked = true;
+  document.getElementById("ruleExpansion").checked = true;
+  document.getElementById("largeLimit").value = 50000;
+  document.getElementById("currency").value = "SAR";
+
+  largeLimit = 50000;
+  currency = "SAR";
+
+  renderTransactions();
+  updateDashboard();
+  logAudit("إعادة القواعد", "تمت إعادة القيم الافتراضية");
+  showToast("تمت إعادة القواعد الافتراضية.");
+}
+
+/* توسع الشركة والمواقع */
+function siteStatusText(status) {
+  const labels = {
+    active: "نشط",
+    new: "جديد",
+    planned: "مخطط له"
+  };
+
+  return translateText(labels[status] || status, currentLanguage);
+}
+
+function siteStatusBadge(status) {
+  const classes = {
+    active: "badge-green",
+    new: "badge-blue",
+    planned: "badge-yellow"
+  };
+
+  return '<span class="badge ' + (classes[status] || "badge-blue") + '">' +
+    safeText(siteStatusText(status)) + '</span>';
+}
+
+function renderSites() {
+  const list = document.getElementById("sitesList");
+
+  list.innerHTML = sites.map(function(site) {
+    return `
+      <div class="site-card">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center">
+          <h4>${safeText(translateText(site.name, currentLanguage))}</h4>
+          ${siteStatusBadge(site.status)}
+        </div>
+
+        <p>${translateText("الاستثمار التقديري:", currentLanguage)} <strong>${money(site.investment)}</strong></p>
+
+        <div class="site-coords">
+          Lat: ${Number(site.latitude).toFixed(4)}
+          <br>
+          Long: ${Number(site.longitude).toFixed(4)}
+        </div>
+
+        <div class="actions section-space">
+          <button class="btn" onclick="openMap(${site.latitude},${site.longitude})">
+            عرض على الخريطة
+          </button>
+          <button class="btn btn-danger" onclick="deleteSite(${site.id})">
+            حذف الموقع
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("") || '<div class="empty">لم تتم إضافة مواقع بعد.</div>';
+
+  document.getElementById("expansionSiteCount").textContent = sites.length;
+  document.getElementById("siteCount").textContent = sites.length;
+  document.getElementById("newSitesCount").textContent =
+    sites.filter(site => site.status === "new").length;
+}
+
+function addSite() {
+  const name = document.getElementById("siteName").value.trim();
+  const latitude = Number(document.getElementById("siteLatitude").value);
+  const longitude = Number(document.getElementById("siteLongitude").value);
+  const status = document.getElementById("siteStatus").value;
+  const investment = Number(document.getElementById("siteInvestment").value || 0);
+
+  if (!name) {
+    showToast("يرجى إدخال اسم الموقع.");
+    return;
+  }
+
+  if (
+    document.getElementById("siteLatitude").value === "" ||
+    document.getElementById("siteLongitude").value === "" ||
+    !Number.isFinite(latitude) ||
+    !Number.isFinite(longitude) ||
+    latitude < -90 || latitude > 90 ||
+    longitude < -180 || longitude > 180
+  ) {
+    showToast("أدخل إحداثيات صحيحة: خط العرض من -90 إلى 90 والطول من -180 إلى 180.");
+    return;
+  }
+
+  if (!Number.isFinite(investment) || investment < 0) {
+    showToast("يرجى إدخال قيمة استثمار صحيحة.");
+    return;
+  }
+
+  const site = {
+    id: nextSiteId++,
+    name: name,
+    latitude: latitude,
+    longitude: longitude,
+    status: status,
+    investment: investment
+  };
+
+  sites.push(site);
+
+  renderSites();
+  updateDashboardCounts();
+  logAudit("إضافة موقع", name + " (" + latitude + ", " + longitude + ")");
+
+  if (rules.expansion) {
+    addSystemNotification(
+      "تحديث مواقع الشركة",
+      "تم تسجيل الموقع: " + name,
+      "info"
+    );
+  }
+
+  showToast("تم تسجيل الموقع.");
+
+  document.getElementById("siteName").value = "";
+  document.getElementById("siteLatitude").value = "";
+  document.getElementById("siteLongitude").value = "";
+  document.getElementById("siteInvestment").value = "";
+}
+
+function deleteSite(id) {
+  const site = sites.find(item => item.id === id);
+  if (!site) return;
+
+  if (!confirm("هل تريد حذف الموقع " + site.name + " من النموذج؟")) return;
+
+  sites = sites.filter(item => item.id !== id);
+
+  renderSites();
+  updateDashboardCounts();
+  logAudit("حذف موقع", site.name);
+
+  if (rules.expansion) {
+    addSystemNotification(
+      "تحديث مواقع الشركة",
+      "تم حذف الموقع من قائمة النموذج: " + site.name,
+      "warning"
+    );
+  }
+
+  showToast("تم حذف الموقع من النموذج.");
+}
+
+function openMap(latitude, longitude) {
+  const url = "https://www.google.com/maps?q=" +
+    encodeURIComponent(latitude + "," + longitude);
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+function updateGrowth() {
+  const input = document.getElementById("growthInput");
+  const value = Number(input.value);
+
+  if (!Number.isFinite(value) || value < -100 || value > 500) {
+    showToast("أدخل نسبة بين -100% و500%.");
+    return;
+  }
+
+  growthRate = value;
+
+  const valueLabel = (value > 0 ? "+" : "") + value + "%";
+  const isGrowth = value > 0;
+  const isContraction = value < 0;
+
+  document.getElementById("growthRate").textContent = valueLabel;
+
+  const status = document.getElementById("expansionStatus");
+  const statusText = document.getElementById("growthStatusText");
+  const explanation = document.getElementById("growthExplanation");
+  const progress = document.getElementById("growthProgress");
+
+  if (isGrowth) {
+    status.textContent = "نمو";
+    status.className = "metric-value green";
+    statusText.textContent = "نمو إيجابي";
+    statusText.className = "green";
+    explanation.textContent =
+      "تشير القيمة المدخلة إلى نمو إيجابي وفق المؤشر التجريبي.";
+  } else if (isContraction) {
+    status.textContent = "انكماش";
+    status.className = "metric-value red";
+    statusText.textContent = "انكماش";
+    statusText.className = "red";
+    explanation.textContent =
+      "تشير القيمة المدخلة إلى انكماش وفق المؤشر التجريبي.";
+  } else {
+    status.textContent = "مستقر";
+    status.className = "metric-value yellow";
+    statusText.textContent = "دون تغيير";
+    statusText.className = "yellow";
+    explanation.textContent =
+      "قيمة المؤشر تساوي صفرًا، فلا يظهر نمو أو انكماش في النموذج.";
+  }
+
+  const width = Math.min(100, Math.abs(value) / 5);
+  progress.style.width = width + "%";
+  progress.style.background = isContraction
+    ? "linear-gradient(90deg,#ff647c,#ff9cab)"
+    : "linear-gradient(90deg,#4387ff,#35d5df)";
+
+  logAudit("تحديث مؤشر النمو", valueLabel);
+  showToast("تم تحديث مؤشر النمو.");
+}
+
+/* سجل المراجعة */
+function renderAudit() {
+  const tbody = document.getElementById("auditTable");
+
+  tbody.innerHTML = audit.map(function(entry) {
+    return `
+      <tr>
+        <td>${dateText(entry.date)}</td>
+        <td>${safeText(entry.action)}</td>
+        <td>${safeText(entry.details)}</td>
+      </tr>
+    `;
+  }).join("") || '<tr><td colspan="3" class="empty">لا توجد أحداث مسجلة بعد.</td></tr>';
+
+  document.getElementById("auditCount").textContent = audit.length;
+  document.getElementById("lastAuditAction").textContent =
+    audit.length ? audit[0].action : "—";
+}
+
+/* تحديث مؤشرات لوحة التحكم */
+function updateDashboardCounts() {
+  document.getElementById("transactionCount").textContent = transactions.length;
+  document.getElementById("notificationCount").textContent = notifications.length;
+  document.getElementById("siteCount").textContent = sites.length;
+}
+
+function updateDashboard() {
+  const income = transactions
+    .filter(item => item.type === "income")
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  const expenses = transactions
+    .filter(item => item.type === "expense")
+    .reduce((sum, item) => sum + item.amount, 0);
+
+  document.getElementById("totalRevenue").textContent = money(income);
+  document.getElementById("totalExpenses").textContent = money(expenses);
+  document.getElementById("netProfit").textContent = money(income - expenses);
+
+  renderTransactions();
+  renderSites();
+  renderNotifications();
+  renderAudit();
+}
+
+function refreshDashboard() {
+  updateDashboard();
+  logAudit("تحديث لوحة التحكم", "تم تحديث المؤشرات من البيانات الموجودة في النموذج");
+  showToast("تم تحديث بيانات الواجهة.");
+}
+
+/* تصدير CSV */
+function downloadCSV(filename, rows) {
+  const csv = rows.map(function(row) {
+    return row.map(function(value) {
+      return '"' + String(value ?? "").replace(/"/g, '""') + '"';
+    }).join(",");
+  }).join("\r\n");
+
+  const blob = new Blob(["\uFEFF" + csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function exportTransactions() {
+  const rows = [
+    ["رقم العملية", "الوصف", "التصنيف", "النوع", "المبلغ", "التاريخ", "الحالة"],
+    ...transactions.map(function(item) {
+      return [
+        item.id,
+        item.description,
+        item.category,
+        item.type === "income" ? "إيراد" : "مصروف",
+        item.amount,
+        dateText(item.date),
+        item.status
+      ];
+    })
+  ];
+
+  downloadCSV("rasd-transactions.csv", rows);
+  logAudit("تصدير المعاملات", "تم إنشاء ملف CSV للمعاملات");
+  showToast("تم تجهيز ملف المعاملات.");
+}
+
+function exportAudit() {
+  const rows = [
+    ["الوقت", "الإجراء", "التفاصيل"],
+    ...audit.map(function(item) {
+      return [dateText(item.date), item.action, item.details];
+    })
+  ];
+
+  downloadCSV("rasd-audit.csv", rows);
+  showToast("تم تجهيز ملف سجل المراجعة.");
+}
+
+/* تشغيل أولي */
+function initializeApp() {
+  renderTransactions();
+  renderNotifications();
+  renderSites();
+  renderAudit();
+  updateGrowth();
+  updateDashboard();
+
+  audit.unshift({
+    date: new Date().toISOString(),
+    action: "تشغيل المنصة",
+    details: "تم تشغيل نموذج رصد مالي في المتصفح"
+  });
+
+  renderAudit();
+}
+
+/* نظام اللغة العربية والإنجليزية */
+const translations = {
+  "رصد مالي":"Rasd Financial",
+  "واجهة تجريبية نشطة":"Demo interface active",
+  "الرئيسية":"Dashboard",
+  "التنبيهات":"Notifications",
+  "المعاملات":"Transactions",
+  "قواعد الحماية":"Protection Rules",
+  "توسع الشركة":"Company Expansion",
+  "سجل المراجعة":"Audit Log",
+  "جارٍ تجهيز القسم المطلوب...":"Preparing the requested section...",
+  "لوحة التحكم":"Dashboard",
+  "نظرة عامة على المؤشرات المالية وحركة النظام.":"Overview of financial indicators and system activity.",
+  "↻ تحديث البيانات":"↻ Refresh Data",
+  "إجمالي الأصول":"Total Assets",
+  "الإيرادات":"Revenue",
+  "المصروفات":"Expenses",
+  "صافي الربح":"Net Profit",
+  "↑ 8.4% مقارنة بالفترة السابقة":"↑ 8.4% compared with the previous period",
+  "↑ 12.6% نمو الإيرادات":"↑ 12.6% revenue growth",
+  "إجمالي المصروفات المسجلة":"Total recorded expenses",
+  "هامش ربح تشغيلي تجريبي":"Demo operating profit margin",
+  "الأداء المالي":"Financial Performance",
+  "بيانات توضيحية خلال آخر ستة أشهر":"Illustrative data for the last six months",
+  "ملخص النظام":"System Summary",
+  "حالة قواعد الحماية":"Protection rules status",
+  "مراقبة العمليات والقيم المالية":"Monitoring transactions and financial values",
+  "مفعّلة":"Enabled",
+  "المعاملات المسجلة":"Recorded transactions",
+  "عدد العمليات في سجل العرض":"Number of transactions in the demo log",
+  "التنبيهات المسجلة في الواجهة":"Notifications recorded in the interface",
+  "مواقع الشركة":"Company locations",
+  "المواقع المسجلة في قسم التوسع":"Locations recorded in the expansion section",
+  "عرض المعاملات":"View Transactions",
+  "عرض توسع الشركة":"View Company Expansion",
+  "آخر المعاملات":"Recent Transactions",
+  "رقم العملية":"Transaction ID",
+  "الوصف":"Description",
+  "التصنيف":"Category",
+  "المبلغ":"Amount",
+  "الحالة":"Status",
+  "مركز التنبيهات":"Notification Center",
+  "متابعة التنبيهات والأحداث المسجلة في النموذج.":"Track notifications and events recorded in the demo.",
+  "مسح التنبيهات":"Clear Notifications",
+  "إضافة تنبيه تجريبي":"Add Demo Notification",
+  "عنوان التنبيه":"Notification Title",
+  "مثال: مراجعة مصروفات":"Example: Expense review",
+  "مستوى التنبيه":"Notification Level",
+  "معلومات":"Information",
+  "تحذير":"Warning",
+  "حرج":"Critical",
+  "التفاصيل":"Details",
+  "اكتب تفاصيل التنبيه...":"Enter notification details...",
+  "إضافة التنبيه":"Add Notification",
+  "إدارة المعاملات":"Transaction Management",
+  "عرض وإضافة العمليات المالية التجريبية.":"View and add demo financial transactions.",
+  "تصدير CSV":"Export CSV",
+  "عدد المعاملات":"Transaction Count",
+  "إجمالي الإيرادات المسجلة":"Total Recorded Revenue",
+  "إجمالي المصروفات المسجلة":"Total Recorded Expenses",
+  "إضافة معاملة":"Add Transaction",
+  "وصف العملية":"Transaction Description",
+  "مثال: إيرادات المبيعات":"Example: Sales revenue",
+  "نوع العملية":"Transaction Type",
+  "إيراد":"Income",
+  "مصروف":"Expense",
+  "التصنيف":"Category",
+  "مثال: تشغيل":"Example: Operations",
+  "حفظ المعاملة":"Save Transaction",
+  "سجل المعاملات":"Transaction Log",
+  "النوع":"Type",
+  "التاريخ":"Date",
+  "إجراء":"Action",
+  "حذف":"Delete",
+  "قواعد تحقق تجريبية داخل واجهة المنصة.":"Demo validation rules within the platform interface.",
+  "إعدادات النموذج":"Demo Settings",
+  "قواعد المراقبة":"Monitoring Rules",
+  "مراقبة العمليات الكبيرة":"Monitor Large Transactions",
+  "إظهار تنبيه للمعاملات التي تتجاوز الحد المحدد.":"Show an alert for transactions exceeding the specified limit.",
+  "التحقق من المبالغ":"Validate Amounts",
+  "رفض المبالغ الصفرية أو السالبة.":"Reject zero or negative amounts.",
+  "تسجيل الأحداث":"Event Logging",
+  "إضافة أحداث الإجراءات إلى سجل المراجعة.":"Add action events to the audit log.",
+  "تنبيهات التوسع":"Expansion Alerts",
+  "إظهار تنبيه عند إضافة أو حذف موقع.":"Show an alert when a location is added or deleted.",
+  "حدود المراقبة":"Monitoring Limits",
+  "الحد الأعلى للعملية قبل التنبيه":"Transaction threshold before alert",
+  "العملة المعروضة":"Displayed Currency",
+  "ريال سعودي (SAR)":"Saudi Riyal (SAR)",
+  "دولار أمريكي (USD)":"US Dollar (USD)",
+  "درهم إماراتي (AED)":"UAE Dirham (AED)",
+  "حفظ القواعد":"Save Rules",
+  "إعادة الافتراضي":"Reset to Default",
+  "هذه القواعد تعمل داخل واجهة العرض فقط، ولا تستبدل نظام صلاحيات أو حماية خلفي.":"These rules operate only in the demo interface and do not replace a backend authorization or security system.",
+  "متابعة نمو الشركة ومواقعها باستخدام الإحداثيات الجغرافية والمؤشرات التوضيحية.":"Track company growth and locations using geographic coordinates and illustrative indicators.",
+  "+ إضافة موقع":"+ Add Location",
+  "عدد المواقع":"Number of Locations",
+  "المواقع المسجلة في النموذج":"Locations recorded in the demo",
+  "مؤشر النمو":"Growth Indicator",
+  "قيمة تجريبية قابلة للتعديل":"Adjustable demo value",
+  "المواقع الجديدة":"New Locations",
+  "مواقع موسومة بأنها جديدة":"Locations marked as new",
+  "حالة التوسع":"Expansion Status",
+  "نمو":"Growth",
+  "وفق المؤشر التوضيحي الحالي":"Based on the current illustrative indicator",
+  "مخطط نمو الشركة":"Company Growth Chart",
+  "مؤشر شهري توضيحي، وليس بيانات مالية فعلية.":"Illustrative monthly indicator, not actual financial data.",
+  "مؤشر النمو والانكماش":"Growth and Contraction Indicator",
+  "غيّر قيمة المؤشر لتوضيح حالة الشركة.":"Change the indicator value to illustrate the company's status.",
+  "نسبة النمو أو الانكماش (%)":"Growth or contraction rate (%)",
+  "تحديث المؤشر":"Update Indicator",
+  "مؤشر الشركة":"Company Indicator",
+  "نمو إيجابي":"Positive Growth",
+  "تشير القيمة الحالية إلى نمو وفق المؤشر التجريبي.":"The current value indicates growth according to the demo indicator.",
+  "إضافة موقع جغرافي":"Add Geographic Location",
+  "أدخل اسم الفرع وخط العرض وخط الطول لتسجيله في القائمة.":"Enter the branch name, latitude, and longitude to add it to the list.",
+  "اسم الفرع أو الموقع":"Branch or Location Name",
+  "مثال: فرع الرياض":"Example: Riyadh Branch",
+  "خط العرض Latitude":"Latitude",
+  "خط الطول Longitude":"Longitude",
+  "حالة الموقع":"Location Status",
+  "نشط":"Active",
+  "جديد":"New",
+  "مخطط له":"Planned",
+  "الاستثمار التقديري":"Estimated Investment",
+  "تسجيل الموقع":"Register Location",
+  "قائمة المواقع":"Locations List",
+  "الإحداثيات المعروضة هي ما تم إدخاله أو قيم تجريبية.":"Displayed coordinates are entered values or demo values.",
+  "سجل إجراءات الواجهة التجريبية.":"Log of demo interface actions.",
+  "تصدير السجل":"Export Log",
+  "عدد الأحداث":"Event Count",
+  "آخر إجراء":"Last Action",
+  "نوع السجل":"Log Type",
+  "محلي":"Local",
+  "الوقت":"Time",
+  "لا توجد معاملات مسجلة":"No transactions recorded",
+  "لا توجد معاملات":"No transactions",
+  "لا توجد تنبيهات حالياً.":"No notifications currently.",
+  "لا توجد أحداث مسجلة بعد.":"No events recorded yet.",
+  "مكتملة":"Completed",
+  "قيد المراجعة":"Under Review",
+  "انكماش":"Contraction",
+  "مستقر":"Stable",
+  "دون تغيير":"No Change",
+  "تشير القيمة المدخلة إلى نمو إيجابي وفق المؤشر التجريبي.":"The entered value indicates positive growth according to the demo indicator.",
+  "تشير القيمة المدخلة إلى انكماش وفق المؤشر التجريبي.":"The entered value indicates contraction according to the demo indicator.",
+  "قيمة المؤشر تساوي صفرًا، فلا يظهر نمو أو انكماش في النموذج.":"The indicator is zero, so the demo shows neither growth nor contraction.",
+  "نموذج واجهة تجريبي — البيانات ليست مرتبطة بمصدر مالي حقيقي.":"Demo interface — data is not connected to a real financial source.",
+  "تم تشغيل واجهة رصد مالي":"Rasd Financial interface started",
+  "تم تحميل النموذج التجريبي بنجاح. لا توجد صلة بنظام مالي خارجي.":"The demo loaded successfully. It is not connected to an external financial system.",
+  "مراجعة البيانات المالية":"Review Financial Data",
+  "تأكد من مراجعة القيم التجريبية قبل استخدامها في أي عرض أو تقرير.":"Review demo values before using them in any presentation or report.",
+  "يرجى إدخال وصف العملية والتصنيف.":"Please enter the transaction description and category.",
+  "يجب أن يكون المبلغ أكبر من صفر.":"The amount must be greater than zero.",
+  "يرجى إدخال مبلغ صحيح.":"Please enter a valid amount.",
+  "تمت إضافة المعاملة.":"Transaction added.",
+  "هل تريد حذف هذه المعاملة من النموذج؟":"Do you want to delete this transaction from the demo?",
+  "تم حذف المعاملة من النموذج.":"Transaction deleted from the demo.",
+  "يرجى إدخال عنوان التنبيه وتفاصيله.":"Please enter the notification title and details.",
+  "تمت إضافة التنبيه.":"Notification added.",
+  "لا توجد تنبيهات لمسحها.":"There are no notifications to clear.",
+  "هل تريد مسح التنبيهات من النموذج؟":"Do you want to clear notifications from the demo?",
+  "تم مسح التنبيهات.":"Notifications cleared.",
+  "يرجى إدخال حد مالي صحيح.":"Please enter a valid financial threshold.",
+  "تم حفظ إعدادات النموذج.":"Demo settings saved.",
+  "أدخل نسبة بين -100% و500%.":"Enter a percentage between -100% and 500%.",
+  "تم تحديث مؤشر النمو.":"Growth indicator updated.",
+  "تم تحديث بيانات الواجهة.":"Interface data refreshed.",
+  "تم تجهيز ملف المعاملات.":"Transaction file is ready.",
+  "تم تجهيز ملف سجل المراجعة.":"Audit log file is ready.",
+  "التنقل":"Navigation",
+  "تشغيل المنصة":"Platform Started",
+  "تم تشغيل نموذج رصد مالي في المتصفح":"Rasd Financial demo started in the browser",
+  "إضافة معاملة":"Add Transaction",
+  "حذف معاملة":"Delete Transaction",
+  "إضافة تنبيه":"Add Notification",
+  "مسح التنبيهات":"Clear Notifications",
+  "تغيير قاعدة":"Change Rule",
+  "حفظ القواعد":"Save Rules",
+  "تصدير المعاملات":"Export Transactions",
+  "تحديث مؤشر النمو":"Update Growth Indicator",
+  "تحديث لوحة التحكم":"Refresh Dashboard",
+  "تم تحديث المؤشرات من البيانات الموجودة في النموذج":"Indicators refreshed using the data in the demo",
+  "جارٍ":"In progress",
+  "مايو":"May",
+  "يونيو":"June",
+  "يوليو":"July",
+  "أغسطس":"August",
+  "سبتمبر":"September",
+  "أكتوبر":"October",
+
+  /* Additional translations for every remaining built-in label, message, and dynamic state */
+  "الصفحة الرئيسية":"Home",
+  "رصد مالي":"Rasd Financial",
+  "إجمالي الأصول":"Total Assets",
+  "إيرادات المبيعات":"Sales Revenue",
+  "مبيعات":"Sales",
+  "مصاريف التشغيل":"Operating Expenses",
+  "تشغيل":"Operations",
+  "عقد خدمات":"Service Contract",
+  "خدمات":"Services",
+  "المقر الرئيسي":"Head Office",
+  "فرع جدة":"Jeddah Branch",
+  "مكتملة":"Completed",
+  "قيد المراجعة":"Under Review",
+  "التنقل":"Navigation",
+  "فتح قسم ":"Opened section ",
+  "جارٍ تجهيز القسم المطلوب...":"Preparing the requested section...",
+  "لا توجد معاملات مسجلة":"No transactions recorded",
+  "لا توجد معاملات":"No transactions",
+  "لا توجد تنبيهات حالياً.":"No notifications at the moment.",
+  "لا توجد أحداث مسجلة بعد.":"No events recorded yet.",
+  "لم تتم إضافة مواقع بعد.":"No locations have been added yet.",
+  "عرض على الخريطة":"View on Map",
+  "حذف الموقع":"Delete Location",
+  "الاستثمار التقديري:":"Estimated investment:",
+  "Lat:":"Lat:",
+  "Long:":"Long:",
+  "تم تسجيل الموقع.":"Location registered.",
+  "يرجى إدخال اسم الموقع.":"Please enter a location name.",
+  "أدخل إحداثيات صحيحة: خط العرض من -90 إلى 90 والطول من -180 إلى 180.":"Enter valid coordinates: latitude must be between -90 and 90 and longitude between -180 and 180.",
+  "يرجى إدخال قيمة استثمار صحيحة.":"Please enter a valid investment amount.",
+  "هل تريد حذف الموقع ":"Do you want to delete the location ",
+  " من النموذج؟":" from the demo?",
+  "تم حذف الموقع من النموذج.":"Location deleted from the demo.",
+  "تم تسجيل الموقع: ":"Location registered: ",
+  "تم حذف الموقع من قائمة النموذج: ":"Location deleted from the demo list: ",
+  "تحديث مواقع الشركة":"Company Locations Updated",
+  "معاملة كبيرة":"Large Transaction",
+  "تم تسجيل معاملة بقيمة ":"A transaction of ",
+  ". يرجى مراجعتها.":". has been recorded. Please review it.",
+  "يرجى إدخال وصف العملية والتصنيف.":"Please enter a transaction description and category.",
+  "يجب أن يكون المبلغ أكبر من صفر.":"The amount must be greater than zero.",
+  "يرجى إدخال مبلغ صحيح.":"Please enter a valid amount.",
+  "تمت إضافة المعاملة.":"Transaction added.",
+  "هل تريد حذف هذه المعاملة من النموذج؟":"Do you want to delete this transaction from the demo?",
+  "تم حذف المعاملة من النموذج.":"Transaction deleted from the demo.",
+  "يرجى إدخال عنوان التنبيه وتفاصيله.":"Please enter the notification title and details.",
+  "تمت إضافة التنبيه.":"Notification added.",
+  "لا توجد تنبيهات لمسحها.":"There are no notifications to clear.",
+  "هل تريد مسح التنبيهات من النموذج؟":"Do you want to clear notifications from the demo?",
+  "تم مسح التنبيهات.":"Notifications cleared.",
+  "يرجى إدخال حد مالي صحيح.":"Please enter a valid financial threshold.",
+  "تم حفظ إعدادات النموذج.":"Demo settings saved.",
+  "تمت إعادة القواعد الافتراضية.":"Rules reset to defaults.",
+  "أدخل نسبة بين -100% و500%.":"Enter a value between -100% and 500%.",
+  "تشير القيمة المدخلة إلى نمو إيجابي وفق المؤشر التجريبي.":"The entered value indicates positive growth according to the demo indicator.",
+  "تشير القيمة المدخلة إلى انكماش وفق المؤشر التجريبي.":"The entered value indicates contraction according to the demo indicator.",
+  "قيمة المؤشر تساوي صفرًا، فلا يظهر نمو أو انكماش في النموذج.":"The indicator is zero, so the demo shows neither growth nor contraction.",
+  "تم تحديث مؤشر النمو.":"Growth indicator updated.",
+  "تم تحديث بيانات الواجهة.":"Interface data refreshed.",
+  "تم تجهيز ملف المعاملات.":"Transaction file is ready.",
+  "تم تجهيز ملف سجل المراجعة.":"Audit log file is ready.",
+  "تم حفظ إعدادات النموذج.":"Demo settings saved.",
+  "تم تحديث المؤشرات من البيانات الموجودة في النموذج":"Indicators refreshed using the demo data",
+  "تم تشغيل واجهة رصد مالي":"Rasd Financial interface started",
+  "تم تحميل النموذج التجريبي بنجاح. لا توجد صلة بنظام مالي خارجي.":"The demo loaded successfully. It is not connected to an external financial system.",
+  "مراجعة البيانات المالية":"Financial Data Review",
+  "تأكد من مراجعة القيم التجريبية قبل استخدامها في أي عرض أو تقرير.":"Review demo values before using them in a presentation or report.",
+  "نموذج واجهة تجريبي — البيانات ليست مرتبطة بمصدر مالي حقيقي.":"Demo interface — data is not connected to a real financial source.",
+  "تنبيه: سجل المراجعة هنا توضيحي، ويمكن للمستخدم تعديل بيانات المتصفح. لا يُعد سجل تدقيق آمنًا أو غير قابل للتلاعب.":"Note: This audit log is illustrative and browser data can be modified. It is not a secure or tamper-proof audit trail.",
+  "هذه القواعد تعمل داخل واجهة العرض فقط، ولا تستبدل نظام صلاحيات أو حماية خلفي.":"These rules work only in this demo interface and do not replace a backend authorization or security system.",
+  "مؤشر شهري توضيحي، وليس بيانات مالية فعلية.":"Illustrative monthly indicator, not actual financial data.",
+  "الإحداثيات المعروضة هي ما تم إدخاله أو قيم تجريبية.":"The displayed coordinates are entered values or demo values.",
+  "البيانات ليست مرتبطة بمصدر مالي حقيقي.":"The data is not connected to a real financial source.",
+  "نموذج واجهة تجريبي":"Demo interface",
+  "المقر الرئيسي":"Head Office",
+  "فرع الرياض":"Riyadh Branch",
+  "تغيير اللغة":"Change language",
+  "تم تغيير اللغة إلى العربية.":"Language changed to Arabic.",
+  "Language changed to English.":"Language changed to English.",
+  "العربية":"Arabic",
+  "إعادة الافتراضي":"Reset to Default",
+  "حفظ القواعد":"Save Rules",
+  "حفظ المعاملة":"Save Transaction",
+  "إضافة التنبيه":"Add Notification",
+  "إضافة موقع":"Add Location",
+  "تسجيل الموقع":"Register Location",
+  "معلومات":"Information",
+  "تحذير":"Warning",
+  "حرج":"Critical",
+  "نشط":"Active",
+  "جديد":"New",
+  "مخطط له":"Planned",
+  "نمو إيجابي":"Positive Growth",
+  "دون تغيير":"No Change",
+  "انكماش":"Contraction",
+  "مستقر":"Stable",
+  "نمو":"Growth",
+  "إيراد":"Income",
+  "مصروف":"Expense",
+  "ريال سعودي (SAR)":"Saudi Riyal (SAR)",
+  "دولار أمريكي (USD)":"US Dollar (USD)",
+  "درهم إماراتي (AED)":"UAE Dirham (AED)",
+  "ر.س":"SAR",
+  "د.إ":"AED",
+
+};
+
+let currentLanguage = "ar";
+const originalTextNodes = new WeakMap();
+const originalAttributes = new WeakMap();
+
+function translateText(value, language) {
+  const text = String(value ?? "");
+  if (language === "ar") return text;
+  if (Object.prototype.hasOwnProperty.call(translations, text)) return translations[text];
+  // Translate known Arabic phrases inside longer built-in dynamic messages.
+  let result = text;
+  const phrases = Object.keys(translations).sort((a, b) => b.length - a.length);
+  for (const phrase of phrases) {
+    if (phrase && result.includes(phrase)) {
+      result = result.split(phrase).join(translations[phrase]);
+    }
+  }
+  return result;
+}
+
+function translatePage(language) {
+  currentLanguage = language;
+  document.documentElement.lang = language;
+  document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(function(node) {
+    if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+    const original = originalTextNodes.get(node);
+    const trimmed = original.trim();
+    if (!trimmed) return;
+    const translated = translateText(trimmed, language);
+    node.nodeValue = original.replace(trimmed, translated);
+  });
+
+  document.querySelectorAll("input[placeholder], textarea[placeholder], button[aria-label], button[title], input[aria-label], select[aria-label]").forEach(function(element) {
+    ["placeholder", "aria-label", "title"].forEach(function(attribute) {
+      if (!element.hasAttribute(attribute)) return;
+      let saved = originalAttributes.get(element);
+      if (!saved) { saved = {}; originalAttributes.set(element, saved); }
+      if (!(attribute in saved)) saved[attribute] = element.getAttribute(attribute);
+      element.setAttribute(attribute, translateText(saved[attribute], language));
+    });
+  });
+
+  const langMenu = document.getElementById("languageMenu");
+  if (langMenu) {
+    langMenu.querySelector('[data-language="ar"]').textContent = language === "ar" ? "✓ العربية" : "العربية";
+    langMenu.querySelector('[data-language="en"]').textContent = language === "en" ? "✓ English" : "English";
+  }
+}
+
+const languageToggle = document.getElementById("languageToggle");
+const languageMenu = document.getElementById("languageMenu");
+
+languageToggle.addEventListener("click", function(event) {
+  event.stopPropagation();
+  const isOpen = !languageMenu.hidden;
+  languageMenu.hidden = isOpen;
+  languageToggle.setAttribute("aria-expanded", String(!isOpen));
+});
+
+languageMenu.querySelectorAll("[data-language]").forEach(function(button) {
+  button.addEventListener("click", function() {
+    translatePage(button.dataset.language);
+    languageMenu.hidden = true;
+    languageToggle.setAttribute("aria-expanded", "false");
+    showToast(button.dataset.language === "en" ? "Language changed to English." : "تم تغيير اللغة إلى العربية.");
+  });
+});
+
+document.addEventListener("click", function(event) {
+  if (!event.target.closest(".language-control")) {
+    languageMenu.hidden = true;
+    languageToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+/* ترجمة المحتوى الذي يُنشأ ديناميكياً عند التنقل أو إضافة البيانات */
+const languageObserver = new MutationObserver(function() {
+  if (currentLanguage === "en") {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+      const original = originalTextNodes.get(node);
+      const trimmed = original.trim();
+      if (trimmed) node.nodeValue = original.replace(trimmed, translateText(trimmed, "en"));
+    }
+  }
+});
+languageObserver.observe(document.body, { childList: true, subtree: true });
+
+initializeApp();
+
+</script>
+
+</body>
+</html>  
